@@ -1,3 +1,40 @@
+var MyRobotExtension = function () {
+};
+
+/**
+ * @return {object} This extension's metadata.
+ */
+MyRobotExtension.prototype.getInfo = function () {
+    return {
+        // Required: the machine-readable name of this extension.
+        // Will be used as the extension's namespace. Must not contain a '.' character.
+        id: 'BLERobots',
+
+        // Optional: the human-readable name of this extension as string.
+        // This and any other string to be displayed in the Scratch UI may either be
+        // a string or a call to `intlDefineMessage`; a plain string will not be
+        // translated whereas a call to `intlDefineMessage` will connect the string
+        // to the translation map (see below). The `intlDefineMessage` call is
+        // similar to `defineMessages` from `react-intl` in form, but will actually
+        // call some extension support code to do its magic. For example, we will
+        // internally namespace the messages such that two extensions could have
+        // messages with the same ID without colliding.
+        // See also: https://github.com/yahoo/react-intl/wiki/API#definemessages
+        name: 'BLE Robots',
+
+        // Optional: URI for an icon for this extension. Data URI OK.
+        // If not present, use a generic icon.
+        // TODO: what file types are OK? All web images? Just PNG?
+        iconURI: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAFCAAAAACyOJm3AAAAFklEQVQYV2P4DwMMEMgAI/+DE' +
+            'UIMBgAEWB7i7uidhAAAAABJRU5ErkJggg==',
+
+        // Optional: Link to documentation content for this extension.
+        // If not present, offer no link.
+        docsURI: 'https://....',
+
+        // Required: the list of blocks implemented by this extension,
+        // in the order intended for display.
+
 {
   "targets": [
     {
@@ -214,3 +251,30 @@
     "agent": "TurboWarp"
   }
 }
+
+/**
+ * Implement myReporter.
+ * @param {object} args - the block's arguments.
+ * @property {number} LETTER_NUM - the string value of the argument.
+ * @property {string} TEXT - the string value of the argument.
+ * @returns {string} a string which includes the block argument value.
+ */
+MyRobotExtension.prototype.myReporter = function (args) {
+    // Note: this implementation is not Unicode-clean; it's just here as an example.
+    const result = args.TEXT.charAt(args.LETTER_NUM);
+
+    return ['Letter ', args.LETTER_NUM, ' of ', args.TEXT, ' is ', result, '.'].join('');
+};
+
+MyRobotExtension.prototype.noop = function () {
+};
+
+MyRobotExtension.prototype.returnTrue = function () {
+    return true;
+};
+
+MyRobotExtension.prototype.returnFalse = function () {
+    return false;
+};
+
+Scratch.extensions.register(new MyRobotExtension());
